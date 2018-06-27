@@ -17,8 +17,8 @@ trait ModelPgArray
      * @return string
      * @see https://stackoverflow.com/a/35175284
      */
-    function convertToPgArray($field) {
-        $set=$this->$field;
+    function saveToPgArray($field) {
+        $set=$this->attributes[$this->$field];
 
         settype($set, 'array'); // can be called with a scalar or array
         $result = array();
@@ -43,7 +43,7 @@ trait ModelPgArray
      * @return array|null
      * @see https://stackoverflow.com/a/27964420
      */
-    function convertFromPgArray($field, $start = 0, &$end = null){
+    function loadFromPgArray($field, $start = 0, &$end = null){
         $s=$this->$field;
 
         if (empty($s) || $s[0] != '{') return null;
