@@ -12,19 +12,17 @@ namespace ArcheeNic\LaraTools;
 trait ModelPgArray
 {
     /**
-     * @param $field
+     * @param array $set
      *
      * @return string
      * @see https://stackoverflow.com/a/35175284
      */
-    function saveToPgArray($field) {
-        $set=$this->attributes[$this->$field];
-
+    function pgArrayMake($set) {
         settype($set, 'array'); // can be called with a scalar or array
         $result = array();
         foreach ($set as $t) {
             if (is_array($t)) {
-                $result[] = to_pg_array($t);
+                $result[] = $this->pgArrayMake($t);
             } else {
                 $t = str_replace('"', '\\"', $t); // escape double quote
                 if (! is_numeric($t)) // quote only non-numeric values
@@ -36,16 +34,14 @@ trait ModelPgArray
     }
 
     /**
-     * @param      $field
+     * @param string $s
      * @param int  $start
      * @param null $end
      *
      * @return array|null
      * @see https://stackoverflow.com/a/27964420
      */
-    function loadFromPgArray($field, $start = 0, &$end = null){
-        $s=$this->$field;
-
+    function pgArrayParse($s, $start = 0, &$end = null){
         if (empty($s) || $s[0] != '{') return null;
         $return = array();
         $string = false;
@@ -62,7 +58,7 @@ trait ModelPgArray
                 $end = $i;
                 break;
             } elseif (!$string && $ch == '{') {
-                $v = pg_array_parse($s, $i, $i);
+                $v = $this->pgArrayParse($s, $i, $i);
             } elseif (!$string && $ch == ','){
                 $return[] = $v;
                 $v = '';
