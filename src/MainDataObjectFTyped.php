@@ -16,25 +16,24 @@ class MainDataObjectFTyped
             }
             switch (gettype($this->{$key})) {
                 case 'boolean':
-                    $this->{$key} = (boolean)$fields;
+                    $this->{$key} = (boolean)$field;
                     break;
                 case 'integer':
-                    $this->{$key} = (integer)$fields;
+                    $this->{$key} = (integer)$field;
                     break;
                 case 'double':
-                    $this->{$key} = (double)$fields;
+                    $this->{$key} = (double)$field;
                     break;
                 case 'string':
-                    $this->{$key} = (string)$fields;
+                    $this->{$key} = (string)$field;
                     break;
                 case 'array':
-                    $this->{$key} = (array)$fields;
+                    $this->{$key} = (array)$field;
                     break;
                 default:
-                    $this->{$key} = $fields;
+                    $this->{$key} = $field;
                     break;
             }
-            $this->{$key} = $fields;
         }
     }
 

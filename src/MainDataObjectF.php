@@ -14,7 +14,7 @@ class MainDataObjectF
             if (!property_exists($this, $key)) {
                 continue;
             }
-            $this->{$key} = $fields;
+            $this->{$key} = $field;
         }
     }
 }
