@@ -1,12 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: kasim
- * Date: 27.06.2018
- * Time: 6:19
- */
-
-namespace ArcheeNic\LaraTools;
+<?php namespace ArcheeNic\LaraTools;
 
 
 trait ModelPgArray
