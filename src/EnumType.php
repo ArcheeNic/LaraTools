@@ -1,6 +1,6 @@
 <?php namespace ArcheeNic\LaraTools;
 
-class Enum
+class EnumType
 {
     static $statusNames = [];
     /**
