@@ -2,9 +2,14 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class toolsMigration extends Migration
 {
+
+    protected function UIIDPrimaryKey(Blueprint $blueprint, $column = 'id'){
+        $blueprint->uuid($column)->primary()->default(DB::raw('gen_random_uuid()'));
+    }
 
     /**
      * Добавить стандартные поля
