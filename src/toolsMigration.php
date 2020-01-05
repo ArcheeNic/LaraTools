@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\DB;
 class toolsMigration extends Migration
 {
 
-    protected function UIIDPrimaryKey(Blueprint $blueprint, $column = 'id'){
-        $blueprint->uuid($column)->primary()->default(DB::raw('gen_random_uuid()'));
+    protected function UIIDPrimaryKey(Blueprint $blueprint, $column = 'id', $default = 'gen_random_uuid()'){
+        $blueprint->uuid($column)->primary()->default(DB::raw($default));
     }
 
     /**
