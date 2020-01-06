@@ -109,6 +109,8 @@ class toolsMigration extends Migration
             $createArray['field'] = $createArray['integer'];
         } elseif (!empty($createArray['string'])) {
             $createArray['field'] = $createArray['string'];
+        } elseif (!empty($createArray['uuid'])) {
+            $createArray['field'] = $createArray['uuid'];
         }
 
         if (empty($createArray['field'])) {
