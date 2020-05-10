@@ -2,6 +2,19 @@
 
 class EnumType
 {
+
+    public static $mapTitles = [];
+
+    public static function getTitle($code)
+    {
+        return static::$mapTitles[$code] ?? static::getUndefinedTitle();
+    }
+
+    public static function getUndefinedTitle(): string
+    {
+        return '';
+    }
+
     static $statusNames = [];
     /**
      * @param $statusCode
