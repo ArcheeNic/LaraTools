@@ -28,6 +28,10 @@ class MainDataObjectF
     public function toArray()
     : array
     {
-        return get_object_vars($this);
+        return (new class {
+            function getPublicVars($object) {
+                return get_object_vars($object);
+            }
+        })->getPublicVars($this);
     }
 }
