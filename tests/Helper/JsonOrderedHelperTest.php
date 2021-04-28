@@ -68,13 +68,13 @@ class JsonOrderedHelperTest extends TestCase
 
     public function testConvertToKeyValue()
     {
-        $data = JsonOrderedHelper::convertToKeyValue(json_encode($this->array));
-        self::assertEquals($data,$this->checkArray);
+        $data = JsonOrderedHelper::convertToKeyValue($this->array);
+        self::assertEquals($data,json_encode($this->checkArray));
     }
 
     public function testConvertFromKeyValue()
     {
-        $data = JsonOrderedHelper::convertFromKeyValue($this->checkArray);
-        self::assertEquals(json_encode($this->array),$data);
+        $data = JsonOrderedHelper::convertFromKeyValue(json_encode($this->checkArray));
+        self::assertEquals($this->array,$data);
     }
 }

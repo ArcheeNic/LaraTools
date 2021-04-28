@@ -20,30 +20,30 @@ class JsonOrderedHelper
         return $array;
     }
 
-    public static function convertToKeyValue(string $value)
-    : array {
+    public static function convertToKeyValue(array $value)
+    : string {
 
-        $value = json_decode($value, true);
         $iterator = 0;
 
-        return collect($value)->mapWithKeys(
+        $array = collect($value)->mapWithKeys(
             function ($value, $key) use (&$iterator) {
                 $array = [$iterator=>self::convertToKeyValueRecursive($key, $value, $iterator++)];
                 return $array;
             }
         )->toArray();
+        return json_encode($array);
     }
 
-    public static function convertFromKeyValue($value)
-    : string {
+    public static function convertFromKeyValue(string $json)
+    : array {
+        $value = json_decode($json, true);
 
-        $array = collect($value)->mapWithKeys(
+        return collect($value)->mapWithKeys(
             function ($value) {
                 return [$value['key']=>static::convertFromKeyValueRecursive($value['value'])];
             }
         )->toArray();
 
-        return json_encode($array);
     }
 
     public static function convertFromKeyValueRecursive($value){
