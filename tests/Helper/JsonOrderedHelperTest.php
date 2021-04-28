@@ -15,7 +15,7 @@ class JsonOrderedHelperTest extends TestCase
     protected function setUp()
     : void
     {
-        $this->array      = ['a' => ['a' => ['a' => ['b', 'b', 'c' => 'd']], 'b' => 0]];
+        $this->array      = ['a' => ['a' => ['a' => ['b', 'b', 'c' => 'd']], 'b' => 0,'c'=>null]];
         $this->checkArray = [
             1 =>
                 [
@@ -56,6 +56,11 @@ class JsonOrderedHelperTest extends TestCase
                                     'key'   => 'b',
                                     'value' => 0,
                                 ],
+                            3 =>
+                                [
+                                    'key'   => 'c',
+                                    'value' => null,
+                                ],
                         ],
                 ],
 
@@ -76,5 +81,6 @@ class JsonOrderedHelperTest extends TestCase
     {
         $data = JsonOrderedHelper::convertFromKeyValue(json_encode($this->checkArray));
         self::assertEquals($this->array,$data);
+
     }
 }

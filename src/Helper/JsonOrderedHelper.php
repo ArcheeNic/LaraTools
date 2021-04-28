@@ -47,7 +47,7 @@ class JsonOrderedHelper
     }
 
     public static function convertFromKeyValueRecursive($value){
-        if(is_scalar($value)){
+        if(is_scalar($value) || !$value){
             return $value;
         }
         if(!is_array($value)){
