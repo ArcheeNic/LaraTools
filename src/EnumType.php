@@ -1,5 +1,8 @@
 <?php namespace ArcheeNic\LaraTools;
 
+/**
+ * @deprecated
+ */
 class EnumType
 {
 

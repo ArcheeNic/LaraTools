@@ -2,9 +2,11 @@
 
 namespace ArcheeNic\LaraTools\Helper;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 class JsonOrderedHelper
 {
-    private static function convertToKeyValueRecursive($key, $value, $iterator = 0)
+    #[ArrayShape(['key' => "", 'value' => "array"])] private static function convertToKeyValueRecursive($key, $value, $iterator = 0)
     : array {
         $array = ['key' => $key];
         if (!is_array($value)) {
@@ -20,6 +22,9 @@ class JsonOrderedHelper
         return $array;
     }
 
+    /**
+     * @throws \JsonException
+     */
     public static function convertToKeyValue(array $value)
     : string {
 
@@ -27,16 +32,18 @@ class JsonOrderedHelper
 
         $array = collect($value)->mapWithKeys(
             function ($value, $key) use (&$iterator) {
-                $array = [$iterator=>self::convertToKeyValueRecursive($key, $value, $iterator++)];
-                return $array;
+                return [$iterator =>self::convertToKeyValueRecursive($key, $value, $iterator++)];
             }
         )->toArray();
-        return json_encode($array);
+        return json_encode($array, JSON_THROW_ON_ERROR);
     }
 
+    /**
+     * @throws \JsonException
+     */
     public static function convertFromKeyValue(string $json)
     : array {
-        $value = json_decode($json, true);
+        $value = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
 
         return collect($value)->mapWithKeys(
             function ($value) {
@@ -46,7 +53,8 @@ class JsonOrderedHelper
 
     }
 
-    public static function convertFromKeyValueRecursive($value){
+    public static function convertFromKeyValueRecursive($value): float|array|bool|int|string|null
+    {
         if(is_scalar($value) || !$value){
             return $value;
         }

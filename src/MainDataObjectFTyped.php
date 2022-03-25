@@ -5,6 +5,7 @@
  * Class MainDataObjectGS
  *
  * @package ArcheeNic\LaraTools
+ * @deprecated
  */
 class MainDataObjectFTyped
 {
