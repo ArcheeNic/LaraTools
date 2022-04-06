@@ -34,8 +34,8 @@ class toolsPgMigration extends Migration
     protected function createForeignField(
         Blueprint $blueprint,
         array $createArray,
-        string $parent_key,
-        string $parent_table,
+        string $parentKey,
+        string $parentTable,
         string $onDelete = 'restrict',
         string $onUpdate = 'restrict'
     ): void {
@@ -66,14 +66,14 @@ class toolsPgMigration extends Migration
             }
             $field = call_user_func_array([$field, $k], $v);
         }
-        $blueprint->foreign($fieldName)->references($parent_key)->on($parent_table)->onDelete($onDelete)
+        $blueprint->foreign($fieldName)->references($parentKey)->on($parentTable)->onDelete($onDelete)
             ->onUpdate($onUpdate);
     }
 
     /**
-     * Установить комментарий для таблицы
+     * Set table comment
      */
-    protected function setCommentTable($table, $comment): void
+    protected function setCommentTable(string $table, string $comment): void
     {
         $this->exec("COMMENT ON TABLE $table IS '$comment';");
     }
@@ -81,8 +81,19 @@ class toolsPgMigration extends Migration
     /**
      * pdo exec facade method
      */
-    final protected function exec($sql_string): void
+    final protected function exec(string $sqlString): void
     {
-        DB::connection()->getPdo()->exec($sql_string);
+        DB::connection()->getPdo()->exec($sqlString);
+    }
+
+    /**
+     * Create schema
+     * @param  string  $name
+     *
+     * @return void
+     */
+    protected function addSchema(string $name): void
+    {
+        $this->exec("CREATE SCHEMA $name");
     }
 }
