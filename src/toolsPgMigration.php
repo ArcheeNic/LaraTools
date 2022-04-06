@@ -61,9 +61,14 @@ class toolsPgMigration extends Migration
             ->onUpdate($onUpdate);
     }
 
-    protected function setCommentTable(string $table, string $comment): void
+    protected function setCommentTable(string $name, string $comment): void
     {
-        $this->exec("COMMENT ON TABLE $table IS '$comment';");
+        $this->exec("COMMENT ON TABLE $name IS '$comment';");
+    }
+
+    protected function setCommentSchema(string $name, string $comment): void
+    {
+        $this->exec("COMMENT ON SCHEMA $name IS '$comment';");
     }
 
     final protected function exec(string $sqlString): void
