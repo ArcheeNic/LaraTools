@@ -9,17 +9,11 @@ use RuntimeException;
 
 class toolsPgMigration extends Migration
 {
-    /**
-     * Make uuid primary key
-     */
     protected function UUIDPrimaryKey(Blueprint $blueprint, $column = 'id', $default = 'gen_random_uuid()'): void
     {
         $blueprint->uuid($column)->primary()->default(DB::raw($default));
     }
 
-    /**
-     * Добавить стандартные поля
-     */
     protected function upStandardFields(Blueprint $table, bool $ignoreId = false): void
     {
         if (!$ignoreId) {
@@ -28,9 +22,6 @@ class toolsPgMigration extends Migration
         $table->timestamps();
     }
 
-    /**
-     * Создать и связать поле
-     */
     protected function createForeignField(
         Blueprint $blueprint,
         array $createArray,
@@ -70,30 +61,23 @@ class toolsPgMigration extends Migration
             ->onUpdate($onUpdate);
     }
 
-    /**
-     * Set table comment
-     */
     protected function setCommentTable(string $table, string $comment): void
     {
         $this->exec("COMMENT ON TABLE $table IS '$comment';");
     }
 
-    /**
-     * pdo exec facade method
-     */
     final protected function exec(string $sqlString): void
     {
         DB::connection()->getPdo()->exec($sqlString);
     }
 
-    /**
-     * Create schema
-     * @param  string  $name
-     *
-     * @return void
-     */
     protected function addSchema(string $name): void
     {
         $this->exec("CREATE SCHEMA $name");
+    }
+
+    protected function dropSchema(string $name): void
+    {
+        $this->exec("DROP SCHEMA $name");
     }
 }
